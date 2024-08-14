@@ -1,0 +1,17 @@
+Application:
+  Server:
+    admin:
+      emails:
+        - "admin@mail.com"
+  Client:
+    HomePath: "etc/.ksm1"
+    ServerEndpoint: "http://localhost:8000"
+    UserEmail: "user1@mail.com"
+    UserPassword: "secret"
+    TemplatePath: "template"
+
+Database:
+  host: localhost
+  port: 5432
+  user: admin
+  password: secret
