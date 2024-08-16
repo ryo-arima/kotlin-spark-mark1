@@ -6,6 +6,7 @@ import pkg.server.controller.*
 import pkg.server.usecase.*
 import pkg.server.repository.*
 import pkg.config.*
+import pkg.middleware.*
 
 fun InitRouter(args: Array<String>){
 
@@ -13,12 +14,9 @@ fun InitRouter(args: Array<String>){
     val userReposiotry = NewUserRepository(appConf)
     val userUsecase = NewUserUsecase(userReposiotry)
     val userController = NewUserController(userUsecase)
-    //before("/api/private/*") { req, res ->
-    //    val token = req.headers("Authorization")
-    //    if (token == null || token != "valid_token") {
-    //        halt(401, "Unauthorized")  // 認証失敗時には401エラーを返す
-    //    }
-    //}
+    before("/api/private/*") { req, res -> ForPrivate(req, res) }
+    before("/api/internal/*") { req, res -> ForInternal(req, res) }
+    before("/api/public/*") { req, res -> ForPublic(req, res) }
 
     path("/api/private") {
         get("/users", Route { req, res -> userController.GetUsersForPrivate(req, res) })
