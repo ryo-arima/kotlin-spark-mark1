@@ -1,0 +1,11 @@
+Hello, ${name}!
+
+Today is ${date}.
+
+Here is the list of your items:
+<#list items as item>
+- ${item}
+</#list>
+
+Best regards,
+Your Application
