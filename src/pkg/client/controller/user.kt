@@ -16,11 +16,14 @@ class BootstrapUserCmdForAdmin: CliktCommand(name = "user", help="") {
 }
 
 class GetUsersCmdForAdmin: CliktCommand(name = "users", help="") {
+    val name: String by option(help = "").default("Guest")
+    val verbose: Boolean by option(help = "").flag()
+
     override fun run() {
         val appConf = NewApplicationConfig()
-        val userReposiotry = NewUserRepository(appConf)
-        val userUsecase = NewUserUsecase(userReposiotry)
-        val users = userUsecase.get()
+        val userReposiotryForPrivate = NewUserRepositoryForPrivate(appConf)
+        val userUsecaseForAdmin = NewUserUsecaseForAdmin(userReposiotryForPrivate)
+        userUsecaseForAdmin.get()
     }
 }
 

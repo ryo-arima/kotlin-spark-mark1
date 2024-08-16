@@ -68,6 +68,19 @@ tasks.named("build") {
     dependsOn("jarAdmin")
     dependsOn("jarApp")
     dependsOn("jarAnonymous")
+    dependsOn("jarServer")
+}
+
+tasks.register<Jar>("jarServer") {
+    archiveBaseName.set("server")
+    archiveVersion.set("1.0.0")
+    archiveClassifier.set("")
+    archiveFileName.set("server.jar")
+    manifest {
+        attributes["Main-Class"] = "cmd.server.MainKt"
+    }
+    from(sourceSets.main.get().output)
+    dependsOn("classes")
 }
 
 tasks.register<Jar>("jarAdmin") {

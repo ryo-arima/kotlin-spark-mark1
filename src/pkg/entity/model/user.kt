@@ -1,12 +1,12 @@
 package pkg.entity.model
 
 public data class User(
-    val id: Int,
-    val uuid: String,
-    val name: String,
-    val email: String,
-    val password: String,
-    val createdAt: String,
-    val updatedAt: String,
-    val deletedAt: String,
+    var id: Int,
+    var uuid: String,
+    var name: String,
+    var email: String,
+    var password: String,
+    var createdAt: String,
+    var updatedAt: String,
+    var deletedAt: String,
 )

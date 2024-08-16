@@ -7,8 +7,12 @@ import java.io.StringWriter
 import java.time.LocalDate
 import java.io.File
 import pkg.client.repository.*
+import pkg.middleware.*
+import pkg.entity.response.*
+import pkg.entity.request.*
+import pkg.entity.model.*
 
-interface UserUsecase {
+interface UserUsecaseForAdmin {
     fun bootstrap()
     fun get()
     fun create() 
@@ -16,16 +20,27 @@ interface UserUsecase {
     fun delete()
 }
 
-class UserUsecaseImpl(userReposiotry: UserReposiotry): UserUsecase {
-    val userReposiotry: UserReposiotry = userReposiotry
+class UserUsecaseForAdminImpl(userReposiotryForPrivate: UserReposiotryForPrivate): UserUsecaseForAdmin {
+    val userReposiotryForPrivate: UserReposiotryForPrivate = userReposiotryForPrivate
 
     override fun bootstrap() {
         println("bootstrap user")
     } 
 
-    override fun get() {
+    override fun get(){
         println("get user")
-        println(userReposiotry.applicationConfig)
+        val cfg = userReposiotryForPrivate.applicationConfig.TemplateEngineConfig
+        var userResponse: UserResponse = userReposiotryForPrivate.get(UserRequest( user = User(
+            id = 1,
+            uuid = "uuid",
+            name = "user",
+            email = "",
+            password = "",
+            createdAt = "2021-01-01",
+            updatedAt = "2021-01-01",  
+            deletedAt = "2021-01-01"
+        )))
+        Output(cfg, mapOf("name" to "user------!"), "get_users.template")
     }
 
     override fun create() {
@@ -43,6 +58,6 @@ class UserUsecaseImpl(userReposiotry: UserReposiotry): UserUsecase {
 
 }
 
-fun NewUserUsecase(userReposiotry: UserReposiotry): UserUsecase {
-    return UserUsecaseImpl(userReposiotry)
+fun NewUserUsecaseForAdmin(userReposiotryForPrivate: UserReposiotryForPrivate): UserUsecaseForAdmin {
+    return UserUsecaseForAdminImpl(userReposiotryForPrivate)
 }
